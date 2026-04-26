@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaz's Birthday Expedition — Are You In?</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #080c14;
+    --deep: #0d1520;
+    --navy: #111d2e;
+    --copper: #b87333;
+    --copper-light: #d4944a;
+    --gold: #e8c870;
+    --gold-dim: #c8a850;
+    --teal: #2a7a7a;
+    --teal-glow: #3db8b8;
+    --star: #f0e6c8;
+    --parchment: #e8dfc8;
+    --muted: #9aabcc;
+    --border: rgba(184,115,51,0.3);
+    --border-bright: rgba(184,115,51,0.6);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--void);
+    font-family: 'Crimson Pro', serif;
+    color: var(--star);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .starfield {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(240,230,200,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(240,230,200,0.7) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 8%, rgba(240,230,200,1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 60%, rgba(240,230,200,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 25%, rgba(240,230,200,0.8) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 82% 45%, rgba(240,230,200,0.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 80%, rgba(240,230,200,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 75%, rgba(240,230,200,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 90%, rgba(240,230,200,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 60% 70%, rgba(240,230,200,1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 78% 12%, rgba(240,230,200,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 35%, rgba(240,230,200,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 55%, rgba(240,230,200,0.6) 0%, transparent 100%),
+      radial-gradient(2px 2px at 48% 30%, rgba(240,230,200,1) 0%, transparent 100%),
+      radial-gradient(1px 1px at 67% 88%, rgba(240,230,200,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 18% 22%, rgba(240,230,200,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 63% 18%, rgba(240,230,200,0.9) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 40%, rgba(61,184,184,0.7) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 95% 15%, rgba(240,230,200,0.8) 0%, transparent 100%),
+      radial-gradient(2px 2px at 20% 48%, rgba(184,115,51,0.5) 0%, transparent 100%);
+    animation: twinkle 7s ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle { 0% { opacity:0.7; } 100% { opacity:1; } }
+
+  .aurora {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--teal) 20%, var(--gold) 50%, var(--copper) 70%, var(--teal-glow) 85%, transparent);
+    background-size: 300% 100%;
+    animation: aurora-flow 6s ease-in-out infinite;
+    box-shadow: 0 0 20px rgba(61,184,184,0.4);
+  }
+
+  @keyframes aurora-flow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 64px 24px 56px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(45,106,106,0.2) 0%, transparent 70%);
+  }
+
+  .astrolabe {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 28px;
+    animation: slow-rotate 40s linear infinite;
+    filter: drop-shadow(0 0 14px rgba(184,115,51,0.5));
+  }
+
+  @keyframes slow-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--copper-light);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(24px, 5vw, 46px);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.25;
+    text-shadow: 0 0 40px rgba(232,200,112,0.3);
+    margin-bottom: 10px;
+  }
+
+  .hero h1 span { color: var(--teal-glow); }
+
+  .hero-date {
+    font-style: italic;
+    font-size: 18px;
+    color: var(--parchment);
+    opacity: 0.85;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 380px;
+    margin: 28px auto 0;
+  }
+
+  .hero-divider::before, .hero-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--copper), transparent);
+  }
+
+  .hero-divider span { color: var(--copper-light); font-size: 16px; }
+
+  .scroll-body {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  .brief-card {
+    background: linear-gradient(135deg, rgba(13,21,32,0.97), rgba(17,29,46,0.92));
+    border: 1px solid var(--border-bright);
+    border-radius: 4px;
+    padding: 36px;
+    margin-bottom: 44px;
+    position: relative;
+    box-shadow: 0 0 50px rgba(184,115,51,0.06), inset 0 1px 0 rgba(184,115,51,0.2);
+  }
+
+  .brief-card::before {
+    content: '✦';
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--void);
+    padding: 0 14px;
+    color: var(--copper);
+    font-size: 14px;
+  }
+
+  .brief-card h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--copper-light);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .brief-card p {
+    font-size: 16.5px;
+    line-height: 1.85;
+    color: var(--parchment);
+    margin-bottom: 14px;
+  }
+
+  .brief-card p:last-of-type { margin-bottom: 0; }
+
+  .expedition-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid var(--border);
+  }
+
+  .fact {
+    padding: 14px 16px;
+    background: rgba(184,115,51,0.06);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  .fact-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--copper-light);
+    margin-bottom: 5px;
+  }
+
+  .fact-value {
+    font-size: 15px;
+    color: var(--star);
+    font-style: italic;
+  }
+
+  .form-section { margin-bottom: 44px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .section-number {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--copper);
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    white-space: nowrap;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-bright), transparent);
+  }
+
+  .form-group { margin-bottom: 22px; }
+
+  label.field-label {
+    display: block;
+    font-size: 16px;
+    color: var(--parchment);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  label.field-label .req { color: var(--copper-light); margin-left: 3px; }
+
+  label.field-label .hint {
+    display: block;
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    width: 100%;
+    padding: 13px 16px;
+    background: rgba(8,12,20,0.8);
+    border: 1px solid var(--border-bright);
+    border-radius: 3px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    color: var(--star);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: rgba(154,171,204,0.55);
+    font-style: italic;
+  }
+
+  input:focus, textarea:focus {
+    border-color: var(--teal-glow);
+    box-shadow: 0 0 0 3px rgba(61,184,184,0.1), 0 0 20px rgba(61,184,184,0.06);
+  }
+
+  textarea { resize: vertical; min-height: 90px; }
+
+  .radio-group, .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .choice-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 16px;
+    background: rgba(8,12,20,0.7);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    font-size: 15.5px;
+    color: var(--parchment);
+    line-height: 1.5;
+  }
+
+  .choice-option:hover {
+    border-color: var(--copper);
+    background: rgba(184,115,51,0.07);
+  }
+
+  .choice-option input[type="radio"],
+  .choice-option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    margin-top: 3px;
+    accent-color: var(--copper-light);
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--copper);
+    font-size: 14px;
+    letter-spacing: 8px;
+    margin: 36px 0;
+    opacity: 0.7;
+  }
+
+  .invite-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin: 8px 0 40px;
+  }
+
+  .decline-btn {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+    padding: 4px 0;
+  }
+
+  .decline-btn:hover { color: var(--parchment); }
+
+  .submit-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--void);
+    background: linear-gradient(135deg, var(--copper-light), var(--gold), var(--copper));
+    border: none;
+    padding: 18px 60px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(184,115,51,0.3);
+  }
+
+  .submit-btn:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+    box-shadow: 0 0 44px rgba(184,115,51,0.5);
+  }
+
+  .submit-note {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 14px;
+  }
+
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 70px 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .success-msg .star-big { font-size: 42px; color: var(--gold); margin-bottom: 20px; }
+
+  .success-msg h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  .success-msg p {
+    font-size: 17px;
+    font-style: italic;
+    color: var(--parchment);
+    line-height: 1.75;
+  }
+
+  @media (max-width: 480px) {
+    .expedition-facts { grid-template-columns: 1fr; }
+    .hero { padding: 48px 16px 40px; }
+    .brief-card { padding: 24px 18px; }
+    .section-title { font-size: 11px; letter-spacing: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="starfield"></div>
+<div class="aurora"></div>
+
+<div class="hero">
+  <!-- Rotating astrolabe -->
+  <div class="astrolabe">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#b87333" stroke-width="1.5" opacity="0.85"/>
+      <g stroke="#b87333" stroke-width="0.8" opacity="0.65">
+        <line x1="50" y1="4" x2="50" y2="11"/><line x1="50" y1="89" x2="50" y2="96"/>
+        <line x1="4" y1="50" x2="11" y2="50"/><line x1="89" y1="50" x2="96" y2="50"/>
+        <line x1="17.9" y1="17.9" x2="22.5" y2="22.5"/><line x1="77.5" y1="77.5" x2="82.1" y2="82.1"/>
+        <line x1="82.1" y1="17.9" x2="77.5" y2="22.5"/><line x1="22.5" y1="77.5" x2="17.9" y2="82.1"/>
+      </g>
+      <circle cx="50" cy="50" r="36" fill="none" stroke="#b87333" stroke-width="0.7" stroke-dasharray="3 5" opacity="0.5"/>
+      <circle cx="50" cy="50" r="24" fill="none" stroke="#d4944a" stroke-width="1" opacity="0.75"/>
+      <line x1="50" y1="26" x2="50" y2="74" stroke="#b87333" stroke-width="0.5" opacity="0.4"/>
+      <line x1="26" y1="50" x2="74" y2="50" stroke="#b87333" stroke-width="0.5" opacity="0.4"/>
+      <line x1="50" y1="50" x2="73" y2="27" stroke="#e8c870" stroke-width="1.4" opacity="0.95"/>
+      <circle cx="73" cy="27" r="2.8" fill="#e8c870"/>
+      <line x1="50" y1="50" x2="29" y2="69" stroke="#d4944a" stroke-width="0.9" opacity="0.75"/>
+      <circle cx="29" cy="69" r="1.8" fill="#d4944a" opacity="0.8"/>
+      <circle cx="50" cy="50" r="4" fill="none" stroke="#e8c870" stroke-width="1.3"/>
+      <circle cx="50" cy="50" r="1.8" fill="#e8c870"/>
+      <circle cx="19" cy="29" r="1.1" fill="#f0e6c8" opacity="0.7"/>
+      <circle cx="27" cy="21" r="0.9" fill="#f0e6c8" opacity="0.6"/>
+      <circle cx="13" cy="41" r="0.9" fill="#f0e6c8" opacity="0.5"/>
+      <line x1="19" y1="29" x2="27" y2="21" stroke="#f0e6c8" stroke-width="0.4" opacity="0.35"/>
+      <line x1="19" y1="29" x2="13" y2="41" stroke="#f0e6c8" stroke-width="0.4" opacity="0.35"/>
+      <circle cx="79" cy="66" r="1.6" fill="#3db8b8" opacity="0.85"/>
+    </svg>
+  </div>
+  <div class="hero-eyebrow">A Birthday Expedition · October 2026</div>
+  <h1>Shaz Turns Another Year<br><span>Somewhere Extraordinary</span></h1>
+  <div class="hero-date">October 10 – 14, 2026 · The destination is a secret</div>
+  <div class="hero-divider"><span>✦</span></div>
+</div>
+
+<!-- INVITATION SCREEN -->
+<div id="inviteScreen" class="scroll-body">
+  <div class="brief-card">
+    <h2>Consider This Your Summons</h2>
+    <p>October 13th is my birthday. I am not letting it pass quietly. I have been cooking up something for a while now and I think, I genuinely think, it might be one of those trips people still talk about years later when someone says <em style="color:var(--gold)">"remember that time we..."</em></p>
+    <p>I cannot tell you where we are going yet. That is part of it. What I can tell you is that it is somewhere that feels like it belongs in another century, the kind of place where the sky does things you did not know skies could do, and there will be good food and cold air and the specific joy of being somewhere new with people you actually like.</p>
+    <p>Five days. October 10th through 14th, 2026. I want you there. So. Are you coming?</p>
+    <div class="expedition-facts">
+      <div class="fact"><div class="fact-label">Dates</div><div class="fact-value">Oct 10 – 14, 2026</div></div>
+      <div class="fact"><div class="fact-label">Destination</div><div class="fact-value">A secret. For now.</div></div>
+      <div class="fact"><div class="fact-label">The Birthday</div><div class="fact-value">October 13th</div></div>
+      <div class="fact"><div class="fact-label">The Vibe</div><div class="fact-value">Nature · Wonder · Celebrate</div></div>
+    </div>
+  </div>
+
+  <div class="invite-btns">
+    <button id="btnYes" class="submit-btn">Take me with you</button>
+    <button id="btnNo" class="decline-btn">I cannot make this one</button>
+  </div>
+</div>
+
+<!-- DECLINE MESSAGE -->
+<div id="declineMsg" class="success-msg">
+  <div class="star-big">✦</div>
+  <h3>We Will Miss You Out There</h3>
+  <p>Truly. If something changes between now and June 1st, come back and let us know.<br>We will save you a spot under the stars just in case.</p>
+</div>
+
+<!-- FORM SCREEN -->
+<div id="formWrap" class="scroll-body" style="display:none; opacity:0; transition: opacity 0.6s ease;">
+
+  <div class="brief-card">
+    <h2>Wonderful. Now the Details.</h2>
+    <p>The destination is still a secret but here is what we can say: there will be hiking, there will be something extraordinary in the sky if we are lucky, and October 13th is going to be a very good birthday. The planning team just needs a little information from you so we can make the whole thing run like magic.</p>
+    <p>Fill this out as honestly as you can. Every answer helps. We will take it from here.</p>
+  </div>
+
+  <form id="tripForm">
+
+    <div class="form-section">
+      <div class="section-header">
+        <span class="section-number">I.</span>
+        <span class="section-title">The Traveler</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Full Name <span class="req">✦</span></label>
+        <input type="text" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Email Address <span class="req">✦</span>
+          <span class="hint">We will send confirmations, updates, and the full itinerary here</span>
+        </label>
+        <input type="email" placeholder="you@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Phone Number
+          <span class="hint">So we can add you to the group chat and reach you on the road</span>
+        </label>
+        <input type="tel" placeholder="+1 (___) ___-____">
+      </div>
+    </div>
+
+    <div class="ornament">· · ✦ · ·</div>
+
+    <div class="form-section">
+      <div class="section-header">
+        <span class="section-number">II.</span>
+        <span class="section-title">Passage & Arrival</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Where are you based? <span class="req">✦</span>
+          <span class="hint">City or general area is fine. This helps us sort out travel logistics once the destination is revealed.</span>
+        </label>
+        <input type="text" placeholder="e.g. New York, Atlanta, Boston, DC area">
+      </div>
+      <div class="form-group">
+        <label class="field-label">How do you usually prefer to travel for trips like this?</label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="travel_pref" value="fly"> I fly whenever I can</label>
+          <label class="choice-option"><input type="radio" name="travel_pref" value="drive"> I am happy to drive if it makes sense</label>
+          <label class="choice-option"><input type="radio" name="travel_pref" value="either"> Either, I just want to get there</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Do you have a valid passport?
+          <span class="hint">Just good to know for planning purposes</span>
+        </label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="passport" value="yes"> Yes and it is current</label>
+          <label class="choice-option"><input type="radio" name="passport" value="expired"> I have one but it may need renewing</label>
+          <label class="choice-option"><input type="radio" name="passport" value="no"> I do not have one</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Are you comfortable sharing a rental car once we are there?
+          <span class="hint">Getting around will require wheels. We will coordinate once the group is confirmed.</span>
+        </label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="car" value="yes"> Yes, happy to share and split costs</label>
+          <label class="choice-option"><input type="radio" name="car" value="own"> I would prefer my own rental</label>
+          <label class="choice-option"><input type="radio" name="car" value="passenger"> I do not drive but I will chip in on costs</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Are you comfortable driving in unfamiliar areas?</label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="driving" value="yes"> Yes, no issue at all</label>
+          <label class="choice-option"><input type="radio" name="driving" value="no"> I would rather be a passenger</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Anything that could affect your ability to travel on these dates?
+          <span class="hint">Work conflicts, prior commitments, anything we should know about now</span>
+        </label>
+        <textarea placeholder="Mention anything relevant so we can plan around it..."></textarea>
+      </div>
+    </div>
+
+    <div class="ornament">· · ✦ · ·</div>
+
+    <div class="form-section">
+      <div class="section-header">
+        <span class="section-number">III.</span>
+        <span class="section-title">Lodgings</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Would you like to stay with the group at the shared lodging? <span class="req">✦</span>
+          <span class="hint">We have a group accommodation sorted. You are welcome to join, or you can arrange your own stay nearby if you prefer.</span>
+        </label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="lodging_group" value="yes"> Yes, I want to stay with the group</label>
+          <label class="choice-option"><input type="radio" name="lodging_group" value="own"> I will sort my own accommodation nearby</label>
+          <label class="choice-option"><input type="radio" name="lodging_group" value="unsure"> Not sure yet, tell me more when the time comes</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">If staying with the group, do you want your own room or are you open to sharing?
+          <span class="hint">Sharing brings the cost down for everyone. No pressure either way.</span>
+        </label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="room" value="private"> I would like my own room please</label>
+          <label class="choice-option"><input type="radio" name="room" value="share"> Open to sharing with someone, happy to split costs</label>
+          <label class="choice-option"><input type="radio" name="room" value="flexible"> Flexible, whatever works for the group</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">If sharing, anyone in particular you would like to room with?</label>
+        <input type="text" placeholder="Name(s), or leave blank and we will figure it out">
+      </div>
+      <div class="form-group">
+        <label class="field-label">What kind of accommodation do you feel most at home in?
+          <span class="hint">Good to know for future trips and for matching you to the right setup</span>
+        </label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="accom_style" value="cozy"> Cozy and character-filled, quirky BnB or lodge energy</label>
+          <label class="choice-option"><input type="radio" name="accom_style" value="hotel"> Clean and predictable, I like knowing what I am getting</label>
+          <label class="choice-option"><input type="radio" name="accom_style" value="nature"> As close to nature as possible, cabin or outdoor vibes</label>
+          <label class="choice-option"><input type="radio" name="accom_style" value="anything"> Honestly anything, I just need a bed and a shower</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Any accommodation requirements?
+          <span class="hint">Accessibility needs, sensitivities, or anything else relevant to your stay</span>
+        </label>
+        <textarea placeholder="Share anything we should account for..."></textarea>
+      </div>
+    </div>
+
+    <div class="ornament">· · ✦ · ·</div>
+
+    <div class="form-section">
+      <div class="section-header">
+        <span class="section-number">IV.</span>
+        <span class="section-title">The Treasury</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">On-the-ground budget, excluding flights <span class="req">✦</span>
+          <span class="hint">Covers your share of accommodation, activities, meals, and transport on the North Shore</span>
+        </label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="budget" value="low"> Under $200</label>
+          <label class="choice-option"><input type="radio" name="budget" value="mid"> $200 – $350</label>
+          <label class="choice-option"><input type="radio" name="budget" value="high"> $350 – $500</label>
+          <label class="choice-option"><input type="radio" name="budget" value="flex"> Flexible, let's just make it wonderful</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Comfortable using a shared expense tracker like Splitwise?</label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="splitwise" value="yes"> Yes, I already use it</label>
+          <label class="choice-option"><input type="radio" name="splitwise" value="open"> Open to it</label>
+          <label class="choice-option"><input type="radio" name="splitwise" value="separate"> I prefer to settle my own expenses as we go</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="ornament">· · ✦ · ·</div>
+
+    <div class="form-section">
+      <div class="section-header">
+        <span class="section-number">V.</span>
+        <span class="section-title">The Pursuit</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Which pursuits call to you? <span class="hint">Select all that apply</span></label>
+        <div class="checkbox-group">
+          <label class="choice-option"><input type="checkbox" value="aurora"> Standing in a dark field at midnight waiting for the sky to do something extraordinary</label>
+          <label class="choice-option"><input type="checkbox" value="hiking"> Hiking through state parks with leaves crunching underfoot</label>
+          <label class="choice-option"><input type="checkbox" value="scenic"> Rolling down a scenic highway with the windows cracked and a good playlist going</label>
+          <label class="choice-option"><input type="checkbox" value="water"> Kayaking or paddleboarding on open water</label>
+          <label class="choice-option"><input type="checkbox" value="food"> Finding the best local spots, ordering something legendary, eating something warm after a cold hike</label>
+          <label class="choice-option"><input type="checkbox" value="history"> Exploring local history, landmarks, and the stories behind a place</label>
+          <label class="choice-option"><input type="checkbox" value="rest"> Sitting somewhere beautiful with a hot drink and absolutely nothing that needs doing</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Hiking experience level?</label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="hiking" value="easy"> Easy, flat trails with good views and minimal suffering</label>
+          <label class="choice-option"><input type="radio" name="hiking" value="moderate"> Moderate, a few miles with some elevation, no problem</label>
+          <label class="choice-option"><input type="radio" name="hiking" value="hard"> Challenging, I want to earn the view at the top</label>
+          <label class="choice-option"><input type="radio" name="hiking" value="skip"> I will skip the hiking and meet everyone at the bottom with snacks</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Are you up for a late-night outing if the skies do something magical?
+          <span class="hint">Think 10pm to 2am, venturing out to find the best possible view. Could happen on the birthday night itself.</span>
+        </label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="aurora_run" value="yes"> Yes, absolutely. I will sleep when I am home.</label>
+          <label class="choice-option"><input type="radio" name="aurora_run" value="maybe"> Depends on how I am feeling that night</label>
+          <label class="choice-option"><input type="radio" name="aurora_run" value="no"> I will be warm inside and cheer you on from there</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="ornament">· · ✦ · ·</div>
+
+    <div class="form-section">
+      <div class="section-header">
+        <span class="section-number">VI.</span>
+        <span class="section-title">Provisions & Wellbeing</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Dietary restrictions or preferences <span class="hint">Select all that apply</span></label>
+        <div class="checkbox-group">
+          <label class="choice-option"><input type="checkbox" value="vegetarian"> Vegetarian</label>
+          <label class="choice-option"><input type="checkbox" value="vegan"> Vegan</label>
+          <label class="choice-option"><input type="checkbox" value="gluten_free"> Gluten-free</label>
+          <label class="choice-option"><input type="checkbox" value="halal"> Halal</label>
+          <label class="choice-option"><input type="checkbox" value="none"> No restrictions</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Any allergies or medical considerations relevant to trip planning?</label>
+        <textarea placeholder="Only what is useful to know, e.g. bee sting allergy, mobility considerations, etc."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="field-label">How do you do with cold weather? We will be spending real time outdoors.</label>
+        <div class="radio-group">
+          <label class="choice-option"><input type="radio" name="cold" value="love"> Genuinely love cold weather. This is my season.</label>
+          <label class="choice-option"><input type="radio" name="cold" value="fine"> I can handle it. I will layer up and be fine.</label>
+          <label class="choice-option"><input type="radio" name="cold" value="concerned"> A little worried about this honestly. I run cold.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="ornament">· · ✦ · ·</div>
+
+    <div class="form-section">
+      <div class="section-header">
+        <span class="section-number">VII.</span>
+        <span class="section-title">Final Dispatch</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Is there something specific you would love to do or see on this trip?</label>
+        <textarea placeholder="A dream moment, something on your list, a specific wish for the week..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="field-label">If you are on the fence, what would help you commit?</label>
+        <textarea placeholder="More details, a certain roommate, a budget question, anything at all..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Any other questions or notes for the planning team?</label>
+        <textarea placeholder="Ask us anything..."></textarea>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" class="submit-btn">Submit My Dispatch</button>
+      <div class="submit-note">Responses go directly to Shaz's planning assistant. Deadline to respond: June 1, 2026.</div>
+    </div>
+
+  </form>
+
+</div><!-- end formWrap -->
+<div class="success-msg" id="successMsg">
+  <div class="star-big">✦</div>
+  <h3>You Are On The Manifest</h3>
+  <p>The stars have noted your name.<br>We will be in touch soon with everything you need to know. In the meantime, start thinking about what you want to wear when you see the aurora.</p>
+</div>
+
+<script>
+  // Step logic
+  const invite = document.getElementById('inviteScreen');
+  const formWrap = document.getElementById('formWrap');
+  const declineMsg = document.getElementById('declineMsg');
+  const successMsg = document.getElementById('successMsg');
+
+  document.getElementById('btnYes').addEventListener('click', function() {
+    invite.style.opacity = '0';
+    invite.style.transition = 'opacity 0.6s ease';
+    setTimeout(() => {
+      invite.style.display = 'none';
+      formWrap.style.display = 'block';
+      setTimeout(() => { formWrap.style.opacity = '1'; }, 30);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 600);
+  });
+
+  document.getElementById('btnNo').addEventListener('click', function() {
+    invite.style.opacity = '0';
+    invite.style.transition = 'opacity 0.6s ease';
+    setTimeout(() => {
+      invite.style.display = 'none';
+      declineMsg.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 600);
+  });
+
+  document.getElementById('tripForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    formWrap.style.opacity = '0';
+    formWrap.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => {
+      formWrap.style.display = 'none';
+      successMsg.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 500);
+  });
+</script>
+</body>
+</html>
